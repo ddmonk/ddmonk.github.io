@@ -4,17 +4,36 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Tag: 编程开发 | ddmonk&#39;s blog</title>
+  <title>Kafka topic leader = -1 or leader = none | ddmonk&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一个会白日做梦的和尚">
-<meta property="og:type" content="website">
-<meta property="og:title" content="ddmonk's blog">
-<meta property="og:url" content="http://yoursite.com/tags/编程开发/index.html">
+  <meta name="description" content="Kafka topic 查询leader为-1问题原因该问题的主要原因是在创建topic时，该partition的所有Replica都宕机了，Leader会自动设置为-1.
+解决方法
+查看Kafka配置文件 /config/server.properties添加如下配置
+
+1auto.leader.rebalance.enable=true
+
+重启kafka的broker：进入kafka的bin目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka topic leader = -1 or leader = none">
+<meta property="og:url" content="http://yoursite.com/2016/03/01/Kafka-topic-leader-1-or-leader-none/index.html">
 <meta property="og:site_name" content="ddmonk's blog">
-<meta property="og:description" content="一个会白日做梦的和尚">
+<meta property="og:description" content="Kafka topic 查询leader为-1问题原因该问题的主要原因是在创建topic时，该partition的所有Replica都宕机了，Leader会自动设置为-1.
+解决方法
+查看Kafka配置文件 /config/server.properties添加如下配置
+
+1auto.leader.rebalance.enable=true
+
+重启kafka的broker：进入kafka的bin目">
+<meta property="og:updated_time" content="2016-03-01T14:23:44.506Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ddmonk's blog">
-<meta name="twitter:description" content="一个会白日做梦的和尚">
+<meta name="twitter:title" content="Kafka topic leader = -1 or leader = none">
+<meta name="twitter:description" content="Kafka topic 查询leader为-1问题原因该问题的主要原因是在创建topic时，该partition的所有Replica都宕机了，Leader会自动设置为-1.
+解决方法
+查看Kafka配置文件 /config/server.properties添加如下配置
+
+1auto.leader.rebalance.enable=true
+
+重启kafka的broker：进入kafka的bin目">
   
     <link rel="alternative" href="/atom.xml" title="ddmonk&#39;s blog" type="application/atom+xml">
   
@@ -200,53 +219,118 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-Kafka-topic-leader-1-or-leader-none" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/02/18/JPA缓存类型/" class="archive-article-date">
-  	<time datetime="2016-02-18T15:26:55.000Z" itemprop="datePublished">2月 18</time>
+    <div class="article-meta">
+      <a href="/2016/03/01/Kafka-topic-leader-1-or-leader-none/" class="article-date">
+  	<time datetime="2016-03-01T14:08:55.000Z" itemprop="datePublished">2016-03-01</time>
 </a>
-        </div>
-    	 
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/02/18/JPA缓存类型/">JPA缓存类型</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Kafka topic leader = -1 or leader = none
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程开发/">编程开发</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka学习/">Kafka学习</a></li></ul>
 	</div>
 
-          
+        
 
-        </div>
         <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
+      </div>
+      
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Kafka-topic-查询leader为-1"><a href="#Kafka-topic-查询leader为-1" class="headerlink" title="Kafka topic 查询leader为-1"></a>Kafka topic 查询leader为-1</h1><h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>该问题的主要原因是在创建topic时，该partition的所有Replica都宕机了，Leader会自动设置为-1.</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ol>
+<li>查看Kafka配置文件 <code>/config/server.properties</code><br>添加如下配置</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto.leader.rebalance.enable=true</span><br></pre></td></tr></table></figure>
+<ol>
+<li>重启kafka的broker：<br>进入kafka的bin目录</li>
+</ol>
+<pre><code class="SHELL">&gt; nohup ./kafka-server-start.sh ../config/server.properties &amp;
+</code></pre>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/02/18/JPA缓存类型/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JPA缓存类型</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Kafka-topic-leader-1-or-leader-none" data-title="Kafka topic leader = -1 or leader = none" data-url="http://yoursite.com/2016/03/01/Kafka-topic-leader-1-or-leader-none/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
 
 </div>
       <footer id="footer">
@@ -272,9 +356,9 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false
 	}
