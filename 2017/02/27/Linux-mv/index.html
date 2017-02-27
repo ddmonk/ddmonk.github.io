@@ -4,36 +4,30 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Kafka topic leader = -1 or leader = none | ddmonk&#39;s blog</title>
+  <title>ddmonk&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Kafka topic 查询leader为-1问题原因该问题的主要原因是在创建topic时，该partition的所有Replica都宕机了，Leader会自动设置为-1.
-解决方法
-查看Kafka配置文件 /config/server.properties添加如下配置
+  <meta name="description" content="title: Linux mv 操作是否新创建空间date: 2017-02-24 17:36:53
+tags:编程开发Linux mv 操作的探讨前期内容Linux 操作过程中，可以通过 ll -i 查看inode
 
-1auto.leader.rebalance.enable=true
-
-重启kafka的broker：进入kafka的bin目">
+inode详解linux上的inode编号是索引节点的编号。理解inode，要从文件储存说起。　　文件储存在硬盘上，硬盘的最小存储单位叫做”扇区”（Sector）。每个扇区储存51">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kafka topic leader = -1 or leader = none">
-<meta property="og:url" content="http://yoursite.com/2016/03/01/Kafka-topic-leader-1-or-leader-none/index.html">
+<meta property="og:title" content="ddmonk's blog">
+<meta property="og:url" content="http://yoursite.com/2017/02/27/Linux-mv/index.html">
 <meta property="og:site_name" content="ddmonk's blog">
-<meta property="og:description" content="Kafka topic 查询leader为-1问题原因该问题的主要原因是在创建topic时，该partition的所有Replica都宕机了，Leader会自动设置为-1.
-解决方法
-查看Kafka配置文件 /config/server.properties添加如下配置
+<meta property="og:description" content="title: Linux mv 操作是否新创建空间date: 2017-02-24 17:36:53
+tags:编程开发Linux mv 操作的探讨前期内容Linux 操作过程中，可以通过 ll -i 查看inode
 
-1auto.leader.rebalance.enable=true
-
-重启kafka的broker：进入kafka的bin目">
-<meta property="og:updated_time" content="2016-03-01T14:23:44.506Z">
+inode详解linux上的inode编号是索引节点的编号。理解inode，要从文件储存说起。　　文件储存在硬盘上，硬盘的最小存储单位叫做”扇区”（Sector）。每个扇区储存51">
+<meta property="og:image" content="http://yoursite.com/2017/02/27/Linux-mv/1.png">
+<meta property="og:image" content="http://yoursite.com/2017/02/27/Linux-mv/2.png">
+<meta property="og:image" content="http://yoursite.com/2017/02/27/Linux-mv/3.png">
+<meta property="og:updated_time" content="2017-02-27T01:24:06.145Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kafka topic leader = -1 or leader = none">
-<meta name="twitter:description" content="Kafka topic 查询leader为-1问题原因该问题的主要原因是在创建topic时，该partition的所有Replica都宕机了，Leader会自动设置为-1.
-解决方法
-查看Kafka配置文件 /config/server.properties添加如下配置
+<meta name="twitter:title" content="ddmonk's blog">
+<meta name="twitter:description" content="title: Linux mv 操作是否新创建空间date: 2017-02-24 17:36:53
+tags:编程开发Linux mv 操作的探讨前期内容Linux 操作过程中，可以通过 ll -i 查看inode
 
-1auto.leader.rebalance.enable=true
-
-重启kafka的broker：进入kafka的bin目">
+inode详解linux上的inode编号是索引节点的编号。理解inode，要从文件储存说起。　　文件储存在硬盘上，硬盘的最小存储单位叫做”扇区”（Sector）。每个扇区储存51">
   
     <link rel="alternative" href="/atom.xml" title="ddmonk&#39;s blog" type="application/atom+xml">
   
@@ -219,11 +213,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-Kafka-topic-leader-1-or-leader-none" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Linux-mv" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/01/Kafka-topic-leader-1-or-leader-none/" class="article-date">
-  	<time datetime="2016-03-01T14:08:55.000Z" itemprop="datePublished">2016-03-01</time>
+      <a href="/2017/02/27/Linux-mv/" class="article-date">
+  	<time datetime="2017-02-27T01:24:06.145Z" itemprop="datePublished">2017-02-27</time>
 </a>
     </div>
   
@@ -232,40 +226,25 @@
       <input type="hidden" class="isFancy" />
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Kafka topic leader = -1 or leader = none
-    </h1>
-  
-
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka学习/">Kafka学习</a></li></ul>
-	</div>
-
-        
-
-        <div class="clearfix"></div>
-      </div>
-      
-    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Kafka-topic-查询leader为-1"><a href="#Kafka-topic-查询leader为-1" class="headerlink" title="Kafka topic 查询leader为-1"></a>Kafka topic 查询leader为-1</h1><h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>该问题的主要原因是在创建topic时，该partition的所有Replica都宕机了，Leader会自动设置为-1.</p>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ol>
-<li>查看Kafka配置文件 <code>/config/server.properties</code><br>添加如下配置</li>
-</ol>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto.leader.rebalance.enable=true</span><br></pre></td></tr></table></figure>
-<ol>
-<li>重启kafka的broker：<br>进入kafka的bin目录</li>
-</ol>
-<pre><code class="SHELL">&gt; nohup ./kafka-server-start.sh ../config/server.properties &amp;
-</code></pre>
+        <p>title: Linux mv 操作是否新创建空间<br>date: 2017-02-24 17:36:53</p>
+<h2 id="tags-编程开发"><a href="#tags-编程开发" class="headerlink" title="tags:编程开发"></a>tags:编程开发</h2><h1 id="Linux-mv-操作的探讨"><a href="#Linux-mv-操作的探讨" class="headerlink" title="Linux mv 操作的探讨"></a>Linux mv 操作的探讨</h1><h2 id="前期内容"><a href="#前期内容" class="headerlink" title="前期内容"></a>前期内容</h2><p>Linux 操作过程中，可以通过 <code>ll -i</code> 查看inode</p>
+<blockquote>
+<p>inode详解<br>linux上的inode编号是索引节点的编号。理解inode，要从文件储存说起。<br>　　文件储存在硬盘上，硬盘的最小存储单位叫做”扇区”（Sector）。每个扇区储存512字节（相当于0.5KB）。<br>　　操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个”块”（block）。这种由多个扇区组成的”块”，是文件存取的最小单位。”块”的大小，最常见的是4KB，即连续八个 sector组成一个 block。<br>　　文件数据都储存在”块”中，那么很显然，还必须找到一个地方储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这种储存文件元信息的区域就叫做inode，中文译名为”索引节点”。<br>　　每个inode都有一个号码，操作系统用inode号码来识别不同的文件。这里值得重复一遍，Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件。对于系统来说，文件名只是inode号码便于识别的别称或者绰号。表面上，用户通过文件名，打开文件。实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的inode号码；其次，通过inode号码，获取inode信息；最后，根据inode信息，找到文件数据所在的block，读出数据。</p>
+</blockquote>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>mv 在操作过程中不会改变文件在磁盘上的位置。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><blockquote>
+<p>1 查看当前Linux中磁盘情况<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>显示如图：<br><img src="/2017/02/27/Linux-mv/1.png" alt="1"></p>
+<blockquote>
+<p>2 查看需要<code>mv</code>的文件的inode<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll -i</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>显示如图：<br><img src="/2017/02/27/Linux-mv/2.png" alt="2"></p>
+<blockquote>
+<p>3 移动并查看移动后的文件的inode<br>显示如图<br><img src="/2017/02/27/Linux-mv/3.png" alt="3"></p>
+</blockquote>
 
       
     </div>
@@ -275,18 +254,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/02/24/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Hello World
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/02/18/JPA缓存类型/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JPA缓存类型</div>
+    <a href="/2017/02/24/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -321,7 +291,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Kafka-topic-leader-1-or-leader-none" data-title="Kafka topic leader = -1 or leader = none" data-url="http://yoursite.com/2016/03/01/Kafka-topic-leader-1-or-leader-none/"></div>
+	<div class="ds-thread" data-thread-key="Linux-mv" data-title="" data-url="http://yoursite.com/2017/02/27/Linux-mv/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
