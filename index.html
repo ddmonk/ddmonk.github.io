@@ -116,7 +116,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Kafka学习/" style="font-size: 10px;">Kafka学习</a> <a href="/tags/编程开发/" style="font-size: 10px;">编程开发</a>
+						<a href="/tags/Kafka学习/" style="font-size: 10px;">Kafka学习</a> <a href="/tags/jetty-web/" style="font-size: 10px;">jetty web</a> <a href="/tags/kafka学习/" style="font-size: 10px;">kafka学习</a> <a href="/tags/编程开发/" style="font-size: 10px;">编程开发</a>
 					</div>
 				</section>
 				
@@ -201,6 +201,126 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-Jetty-Jersey-Guice-with-cross-origin" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/04/Jetty-Jersey-Guice-with-cross-origin/" class="article-date">
+  	<time datetime="2018-06-04T03:04:51.000Z" itemprop="datePublished">2018-06-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/04/Jetty-Jersey-Guice-with-cross-origin/">Jetty Jersey Guice with cross origin</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Jetty-Request-URL-跨域问题"><a href="#Jetty-Request-URL-跨域问题" class="headerlink" title="Jetty Request URL 跨域问题"></a>Jetty Request URL 跨域问题</h1><h2 id="跨域问题的原因"><a href="#跨域问题的原因" class="headerlink" title="跨域问题的原因"></a>跨域问题的原因</h2><p>跨域是指a页面想获取b页面资源，如果a、b页面的协议、域名、端口、子域名不同，或是a页面为ip地址，b页面为域名地址，所进行的访问行动都是跨域的，而浏览器为了安全问题一般都限制了跨域访问，也就是不允许跨域请求资源。<br>该部分内容可以参考 <a href="https://blog.csdn.net/qq_31617637/article/details/72955239" target="_blank" rel="external">连接</a></p>
+<h2 id="跨域问题jetty静态资源解决办法"><a href="#跨域问题jetty静态资源解决办法" class="headerlink" title="跨域问题jetty静态资源解决办法"></a>跨域问题jetty静态资源解决办法</h2><p>使用jetty静态资源跨域主要是解决加载js、css等资源的跨越问题。<br>解决类似问题可以为servlet增加一个Filter。简单的filter代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CrossOriginFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">        <span class="comment">// 必须的</span></span><br><span class="line">        HttpServletResponse response = (HttpServletResponse) servletResponse;</span><br><span class="line">        response.setHeader(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">        filterChain.doFilter(servletRequest, response);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>类似方法也可以使用jetty-servlets.jar中的CrossOriginFilter。<code>web.xml</code>配置文件如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">web-app</span> <span class="attribute">...</span>&gt;</span></span><br><span class="line">     ...</span><br><span class="line">     <span class="tag">&lt;<span class="title">filter</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">filter-name</span>&gt;</span>cross-origin<span class="tag">&lt;/<span class="title">filter-name</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">filter-class</span>&gt;</span>org.eclipse.jetty.servlets.CrossOriginFilter<span class="tag">&lt;/<span class="title">filter-class</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">filter</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="title">filter-mapping</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">filter-name</span>&gt;</span>cross-origin<span class="tag">&lt;/<span class="title">filter-name</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">url-pattern</span>&gt;</span>/cometd/*<span class="tag">&lt;/<span class="title">url-pattern</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">filter-mapping</span>&gt;</span></span><br><span class="line">     ...</span><br><span class="line"> <span class="tag">&lt;/<span class="title">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>注意，maven使用的dependency为<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.eclipse.jetty<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>jetty-servlets<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>$&#123;jetty.version&#125;<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到如图<br><img src="/2018/06/04/Jetty-Jersey-Guice-with-cross-origin/20180604113414.png" alt="response结果"></p>
+<h2 id="跨域问题jersey请求解决办法"><a href="#跨域问题jersey请求解决办法" class="headerlink" title="跨域问题jersey请求解决办法"></a>跨域问题jersey请求解决办法</h2><p>我使用的Guice与jersey相结合，要使通过jersey的请求能够带上对应的Response内容，需要在JerseyServletModule中增加对应的Filter。<br>代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bind(CrossOriginFilter.class).in(Singleton.class);</span><br><span class="line">filter(<span class="string">"/*"</span>).through(CrossOriginFilter.class);</span><br></pre></td></tr></table></figure></p>
+<p>访问后获取response即可获取。<br>亲测无问题。<br>附上github example地址<a href="https://github.com/ddmonk/jetty-jesery-guice" target="_blank" rel="external">jetty+jesery+guice example</a></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jetty-web/">jetty web</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Kafka-producer-startup" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/04/05/Kafka-producer-startup/" class="article-date">
+  	<time datetime="2017-04-05T03:52:11.000Z" itemprop="datePublished">2017-04-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/05/Kafka-producer-startup/">Kafka producer startup</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="KAFKA-producer-启动过程解释"><a href="#KAFKA-producer-启动过程解释" class="headerlink" title="KAFKA producer 启动过程解释"></a>KAFKA producer 启动过程解释</h1><p>kafka producer为kafka消息的生产者，主要</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka学习/">kafka学习</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Linux-mv" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -524,7 +644,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 ddmonk
+    		&copy; 2018 ddmonk
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
