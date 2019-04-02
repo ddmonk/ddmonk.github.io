@@ -2,6 +2,7 @@ title: JAVA Integer
 date: 2019-04-02 01:11:46
 tags: Java Foundation
 ---
+
 # Java Integer小实验 #
 ## 背景 ##
 在项目过程中，有同事在Integer之间使用的`==`进行比较，导致现网上面一直无法匹配，但是在测试过程中并没有发现类似的问题，所以有必要对Integer之间的比较进行一个调研。
