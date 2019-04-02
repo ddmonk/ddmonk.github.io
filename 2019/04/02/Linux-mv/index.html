@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>ddmonk&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title: Linux mv 操作是否新创建空间date: 2017-02-24 17:36:53 tags:编程开发Linux mv 操作的探讨前期内容Linux 操作过程中，可以通过 ll -i 查看inode  inode详解linux上的inode编号是索引节点的编号。理解inode，要从文件储存说起。　　文件储存在硬盘上，硬盘的最小存储单位叫做”扇区”（Sector）。每个扇区储存51">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ddmonk&#39;s blog">
+<meta property="og:url" content="http://yoursite.com/2019/04/02/Linux-mv/index.html">
+<meta property="og:site_name" content="ddmonk&#39;s blog">
+<meta property="og:description" content="title: Linux mv 操作是否新创建空间date: 2017-02-24 17:36:53 tags:编程开发Linux mv 操作的探讨前期内容Linux 操作过程中，可以通过 ll -i 查看inode  inode详解linux上的inode编号是索引节点的编号。理解inode，要从文件储存说起。　　文件储存在硬盘上，硬盘的最小存储单位叫做”扇区”（Sector）。每个扇区储存51">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/04/02/Linux-mv/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/02/Linux-mv/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/02/Linux-mv/3.png">
+<meta property="og:updated_time" content="2019-04-02T07:14:47.534Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ddmonk&#39;s blog">
+<meta name="twitter:description" content="title: Linux mv 操作是否新创建空间date: 2017-02-24 17:36:53 tags:编程开发Linux mv 操作的探讨前期内容Linux 操作过程中，可以通过 ll -i 查看inode  inode详解linux上的inode编号是索引节点的编号。理解inode，要从文件储存说起。　　文件储存在硬盘上，硬盘的最小存储单位叫做”扇区”（Sector）。每个扇区储存51">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/02/Linux-mv/1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="ddmonk&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head></html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ddmonk&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">技术积累</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Linux-mv" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/02/Linux-mv/" class="article-date">
+  <time datetime="2019-04-02T07:14:47.534Z" itemprop="datePublished">2019-04-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title: Linux mv 操作是否新创建空间<br>date: 2017-02-24 17:36:53</p>
+<h2 id="tags-编程开发"><a href="#tags-编程开发" class="headerlink" title="tags:编程开发"></a>tags:编程开发</h2><h1 id="Linux-mv-操作的探讨"><a href="#Linux-mv-操作的探讨" class="headerlink" title="Linux mv 操作的探讨"></a>Linux mv 操作的探讨</h1><h2 id="前期内容"><a href="#前期内容" class="headerlink" title="前期内容"></a>前期内容</h2><p>Linux 操作过程中，可以通过 <code>ll -i</code> 查看inode</p>
+<blockquote>
+<p>inode详解<br>linux上的inode编号是索引节点的编号。理解inode，要从文件储存说起。<br>　　文件储存在硬盘上，硬盘的最小存储单位叫做”扇区”（Sector）。每个扇区储存512字节（相当于0.5KB）。<br>　　操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个”块”（block）。这种由多个扇区组成的”块”，是文件存取的最小单位。”块”的大小，最常见的是4KB，即连续八个 sector组成一个 block。<br>　　文件数据都储存在”块”中，那么很显然，还必须找到一个地方储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这种储存文件元信息的区域就叫做inode，中文译名为”索引节点”。<br>　　每个inode都有一个号码，操作系统用inode号码来识别不同的文件。这里值得重复一遍，Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件。对于系统来说，文件名只是inode号码便于识别的别称或者绰号。表面上，用户通过文件名，打开文件。实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的inode号码；其次，通过inode号码，获取inode信息；最后，根据inode信息，找到文件数据所在的block，读出数据。</p>
+</blockquote>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>mv 在操作过程中不会改变文件在磁盘上的位置。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><blockquote>
+<p>1 查看当前Linux中磁盘情况<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>显示如图：<br><img src="/2019/04/02/Linux-mv/1.png" alt="1"></p>
+<blockquote>
+<p>2 查看需要<code>mv</code>的文件的inode<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll -i</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>显示如图：<br><img src="/2019/04/02/Linux-mv/2.png" alt="2"></p>
+<blockquote>
+<p>3 移动并查看移动后的文件的inode<br>显示如图<br><img src="/2019/04/02/Linux-mv/3.png" alt="3"></p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/02/Linux-mv/" data-id="cjtzk001f0009jejx4iid4081" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/02/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-Foundation/">Java Foundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka学习/">Kafka学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jetty-web/">jetty web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka学习/">kafka学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程开发/">编程开发</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Java-Foundation/" style="font-size: 10px;">Java Foundation</a> <a href="/tags/Kafka学习/" style="font-size: 10px;">Kafka学习</a> <a href="/tags/jetty-web/" style="font-size: 10px;">jetty web</a> <a href="/tags/kafka学习/" style="font-size: 10px;">kafka学习</a> <a href="/tags/编程开发/" style="font-size: 10px;">编程开发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/02/Linux-mv/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/02/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/01/test/">test</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/01/JAVA-Integer/">JAVA Integer</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/03/Jetty-Jersey-Guice-with-cross-origin/">Jetty Jersey Guice with cross origin</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 ddmonk<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
